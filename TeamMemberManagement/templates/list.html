@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>List Page</title>
+</head>
+<body>
+<div class="container">
+    <h2>Team Members</h2>
+    <p>You have {{ members|length }} team members.</p>
+</div>
+<div class="container">
+    <a href="{% url 'add_member' %}" class="btn btn-primary mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+             viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+        </svg>
+        Add Team Member
+    </a>
+    {% for member in members %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'edit_member' pk=member.id %}">
+                        {{ member.first_name }} {{ member.last_name }}
+                        {% if member.role == "admin" %}
+                            <span class="badge bg-primary">Admin</span>
+                        {% endif %}
+                    </a>
+                </h5>
+                <p class="card-text">{{ member.phone_number }}</p>
+                <p class="card-text">{{ member.email }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
