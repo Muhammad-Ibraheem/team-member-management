@@ -1,42 +1,36 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import TeamMember
 from .forms import TeamMemberForm
 
 
-# Create your views here.
-
-def team_list(request):
-    if request.method == "GET":
-        members = TeamMember.objects.all().order_by('-id')
-        return render(request, 'list.html', {"members": members})
-
-
-def add_member(request):
-    if request.method == "POST":
-        form = TeamMemberForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('team_list')
-    form = TeamMemberForm()
-    return render(request, 'new.html', {'form': form})
+class TeamMemberListView(ListView):
+    model = TeamMember
+    template_name = 'list.html'
+    context_object_name = 'members'
+    ordering = ['-id']
 
 
-def edit_member(request, pk):
-    member = TeamMember.objects.get(pk=pk)
-    if request.method == "POST":
-        if 'delete' in request.POST:
-            member.delete()
-            return redirect('team_list')
-        form = TeamMemberForm(request.POST, instance=member)
-        if form.is_valid():
-            form.save()
-            return redirect('team_list')
-    form = TeamMemberForm(instance=member)
-    return render(request, 'edit.html', {"form": form, "member": member})
+class TeamMemberCreateView(CreateView):
+    model = TeamMember
+    template_name = 'new.html'
+    form_class = TeamMemberForm
+    success_url = reverse_lazy('team_list')
 
 
-def delete_member(request, pk):
-    member = TeamMember.objects.get(pk=pk)
-    print(member)
-    member.delete()
-    return redirect('team_list')
+class TeamMemberUpdateView(UpdateView):
+    model = TeamMember
+    template_name = 'edit.html'
+    form_class = TeamMemberForm
+    success_url = reverse_lazy('team_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['member'] = self.object
+        return context
+
+
+class TeamMemberDeleteView(DeleteView):
+    model = TeamMember
+    template_name = 'confirm_delete.html'
+    success_url = reverse_lazy('team_list')

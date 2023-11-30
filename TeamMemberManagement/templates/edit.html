@@ -40,11 +40,8 @@
                 </div>
                 <div class="d-flex">
                     <button type="submit" class="btn btn-primary me-2">Save</button>
-                    {% if member.role == "admin" %}
-                        <form method="post" action="{% url 'delete_member' pk=member.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger" name="delete">Delete</button>
-                        </form>
+                    {% if member.role == 'admin' %}
+                        <a href="{% url 'delete_member' pk=member.pk %}" class="btn btn-danger">Delete</a>
                     {% endif %}
                 </div>
             </form>
