@@ -9,3 +9,6 @@ class TeamMember(models.Model):
     phone_number = models.CharField(max_length=15)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, default="regular")
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
