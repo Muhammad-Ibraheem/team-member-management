@@ -64,4 +64,4 @@ view, edit, add, and delete team members. It consists of three main pages: List 
 - run the server for the app in development
 
 ## Time Spent
--I spent approximately 15 hours working on this project.
+- I spent approximately 15 hours working on this project.
