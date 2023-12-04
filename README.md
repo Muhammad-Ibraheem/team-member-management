@@ -63,5 +63,5 @@ view, edit, add, and delete team members. It consists of three main pages: List 
 - python manage.py runserver
 - run the server for the app in development
 
-## ## Time Spent
--I spent approximately 25 hours working on this project.
+## Time Spent
+-I spent approximately 15 hours working on this project.
